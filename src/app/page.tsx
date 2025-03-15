@@ -4,9 +4,10 @@ import HeroSection from "@/components/base/HeroSection";
 import Navbar from "@/components/base/Navbar";
 import UserReviews from "@/components/base/UserReviews";
 import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/options";
 
-export default function Home() {
-  const session = getServerSession(authOptions);
+export default async function Home() {
+  const session = await getServerSession(authOptions);
   
   return (
     <div className="min-h-screen flex flex-col ">
