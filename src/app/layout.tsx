@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
-import { SessionProvider } from "next-auth/react";
+import SessionProvider from "../providers/sessionProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://quick-chatting-app.vercel.app/"),
@@ -21,7 +21,7 @@ export default function RootLayout({
       <body>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
