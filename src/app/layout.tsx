@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://quick-chatting-app.vercel.app/"),
-  title: {default: "Quick Chatting APP", template: "%s | Quick Chatting APP"},
+  title: { default: "Quick Chatting APP", template: "%s | Quick Chatting APP" },
   description: "Use this app to chat with your friends witout any hassle and login.",
   keywords: ["chat", "quick", "app", "chatting"],
   applicationName: "Quick Chatting APP",
@@ -24,7 +25,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <SessionProvider>{children}</SessionProvider>
         </ThemeProvider>
       </body>
     </html>
