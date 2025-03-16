@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 import SessionProvider from "../providers/sessionProvider";
+import { Toaster } from "@/components/ui/sonner"
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://quick-chatting-app.vercel.app/"),
@@ -26,6 +27,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SessionProvider>{children}</SessionProvider>
+          <Toaster richColors duration={3*1000}/>
         </ThemeProvider>
       </body>
     </html>
