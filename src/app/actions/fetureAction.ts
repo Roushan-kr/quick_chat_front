@@ -1,6 +1,6 @@
 'use server'
 
-import { emailSchema } from "@/validation/email";
+import { emailSchema } from "@/validations/email";
 
 export const suscribeNewsletter = (formData: FormData)=>{
    const email = formData.get("email");

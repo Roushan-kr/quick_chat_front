@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 
 import {
@@ -7,7 +7,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -21,23 +20,40 @@ import { CHAT_GROUP } from "@/lib/apiAuthRoutes";
 import { toast } from "sonner";
 import { clearCache } from "@/actions/common";
 import { User } from "next-auth";
+import { GroupChatType } from "@/types/chatgroup";
 
-export default function CreateChat({ user }: { user: User }) {
-  const [open, setOpen] = useState(false);
+export default function EditGroupChat({
+  user,
+  group,
+  open,
+  setOpen,
+}: {
+  user: User;
+  group: GroupChatType;
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+}) {
   const [loading, setLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<createChatSchemaType>({
     resolver: zodResolver(createChatSchema),
   });
+
+  useEffect(() => {
+    setValue("title", group.title);
+    setValue("passcode", group.passcode);
+  }, [group]);
+
   const onSubmit = async (payload: createChatSchemaType) => {
     // console.log("The payload is", payload);
     try {
       setLoading(true);
-      const { data } = await axios.post(CHAT_GROUP, payload, {
+      const { data } = await axios.put(`${CHAT_GROUP}/${group.id}`, payload, {
         headers: {
           Authorization: user.token,
         },
@@ -61,12 +77,9 @@ export default function CreateChat({ user }: { user: User }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button>Create Chat</Button>
-      </DialogTrigger>
       <DialogContent onInteractOutside={(e) => e.preventDefault()}>
         <DialogHeader>
-          <DialogTitle>Create your new Chat</DialogTitle>
+          <DialogTitle>Update group chat</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mt-4">
