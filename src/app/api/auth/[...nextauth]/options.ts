@@ -14,19 +14,16 @@ export const authOptions: AuthOptions = {
       authorization: {
         params: {
           scope:
-            "openid email profile https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/contacts.readonly",
+            "openid email profile https://www.googleapis.com/auth/userinfo.profile",
           prompt: "consent",
           access_type: "offline",
           response_type: "code",
         },
       },
-      region: "in",
     }),
   ],
   pages: {
-    signIn: "/auth/signin",
-    signOut: "/auth/signout",
-    error: "/auth/error",
+    signIn: "/",
   },
   callbacks: {
     async signIn({ user, account }: { user: User; account: Account | null }) {
@@ -61,7 +58,7 @@ export const authOptions: AuthOptions = {
     },
 
     async session({ session, token }: { session: Session; token: JWT }) {
-      session.user = token.user as User;
+      session.user = token.user ? (token.user as User) : null;
       return session;
     },
   },
