@@ -42,7 +42,8 @@ export default function CreateChat({ user }: { user: User }) {
           Authorization: user.token,
         },
       });
-
+      console.log("The data is", data);
+      
       if (data?.message) {
         setOpen(false);
         toast.success(data?.message);

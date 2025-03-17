@@ -13,8 +13,8 @@ export default function GroupChatCard({
 }) {
   return (
     <Card>
-      <CardHeader className="flex-row justify-between items-center ">
-        <CardTitle className="text-2xl">{group.title}</CardTitle>
+      <CardHeader className="flex justify-between items-center ">
+        <CardTitle className="text-xl">{group.title.toLocaleUpperCase()}</CardTitle>
         <GroupChatCardMenu user={user} group={group} />
       </CardHeader>
       <CardContent>
